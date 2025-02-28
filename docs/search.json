@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "index",
+    "section": "",
+    "text": "about: links: - text: Lab3 href: https://saramclaughlin.github.io/saramclaughlin.github"
+  },
+  {
+    "objectID": "lab-03.html",
+    "href": "lab-03.html",
+    "title": "lab-03",
+    "section": "",
+    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(flextable)\n\n\nAttaching package: 'flextable'\n\nThe following object is masked from 'package:purrr':\n\n    compose\n\nlibrary(zoo)\n\n\nAttaching package: 'zoo'\n\nThe following objects are masked from 'package:base':\n\n    as.Date, as.Date.numeric\n\n\n##Question 1: #Easy access to historical and real-time environmental data is helpful in expanding our understandng of climate change, natural resources, and public health because it is important to analyze trends over time in order to draw conclusions on these topics and predict future trends. Open data is important because without a plethora of historical data to draw on, these historic and futuristic trends would be a lot more difficult to observe and analyze, and therefore mitigate. When this data becomes unavailable we no longer have baseline data to draw comparisons with where we are at now, which makes it much more difficult to draw causal relationships in these study areas. Furthermore, history is known to repeat itself. If significant historical data is missing, it is more likely that we will repeat the same mistakes and diminish progression.\n##Question 2:\n\ndata = read.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv') \nmy.date &lt;- as.Date(\"2022-01-01\")\nmy.state &lt;- \"Colorado\"\n\n\nlibrary(\"dplyr\")\ncolorado_data &lt;- filter(data, state == \"Colorado\") %&gt;% group_by(county) %&gt;% arrange(date) %&gt;% mutate(new_cases = cases - lag(cases, n = 1), new_deaths = deaths-lag(deaths, n = 1)) %&gt;% ungroup()\n\n\nmost_cum_cases &lt;- colorado_data %&gt;% filter(date == my.date) %&gt;% group_by(county) %&gt;% arrange(desc(cases)) %&gt;% head(n = 5)\n\n\nmost_new_cases &lt;- colorado_data %&gt;% filter(date == my.date) %&gt;% group_by(county) %&gt;% arrange(desc(new_cases)) %&gt;% head(n = 5)\n\n\nQuestion 3:"
+  }
+]

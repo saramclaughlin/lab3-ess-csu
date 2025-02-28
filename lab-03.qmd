@@ -1,0 +1,42 @@
+---
+title: "lab-03"
+subtitle: 'Ecosystem Science and Sustainability 330'
+author:
+  - name: Sara McLaughlin
+    email: mclau0@colostate.edu
+    website: "https://saramclaughlin.github.io/saramclaughlin.github/" 
+format: html
+execute: 
+  echo: true
+editor: visual
+---
+```{r}
+library(tidyverse)
+library(flextable)
+library(zoo)
+```
+
+##Question 1: #Easy access to historical and real-time environmental data is helpful in expanding our understandng of climate change, natural resources, and public health because it is important to analyze trends over time in order to draw conclusions on these topics and predict future trends. Open data is important because without a plethora of historical data to draw on, these historic and futuristic trends would be a lot more difficult to observe and analyze, and therefore mitigate. When this data becomes unavailable we no longer have baseline data to draw comparisons with where we are at now, which makes it much more difficult to draw causal relationships in these study areas. Furthermore, history is known to repeat itself. If significant historical data is missing, it is more likely that we will repeat the same mistakes and diminish progression.
+
+##Question 2:
+
+```{r}
+data = read.csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv') 
+my.date <- as.Date("2022-01-01")
+my.state <- "Colorado"
+```
+
+```{r}
+library("dplyr")
+colorado_data <- filter(data, state == "Colorado") %>% group_by(county) %>% arrange(date) %>% mutate(new_cases = cases - lag(cases, n = 1), new_deaths = deaths-lag(deaths, n = 1)) %>% ungroup()
+```
+
+```{r}
+most_cum_cases <- colorado_data %>% filter(date == my.date) %>% group_by(county) %>% arrange(desc(cases)) %>% head(n = 5)
+```
+
+```{r}
+most_new_cases <- colorado_data %>% filter(date == my.date) %>% group_by(county) %>% arrange(desc(new_cases)) %>% head(n = 5)
+```
+
+# Question 3:
